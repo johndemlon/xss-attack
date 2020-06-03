@@ -1,0 +1,54 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="domain" content="chefsecure.com">
+  <link rel="stylesheet" media="screen" href="https://examples.insecure.chefsecure.com/assets/insecure/examples-5b0b87759ac474f31f9a7783e7c0f466a41f70a6ef243bf33c4e15271958ddc4.css">
+  <script src="https://examples.insecure.chefsecure.com/assets/insecure/examples_init-68be104777c4cf393aa9f839ea13e584a2f44c9317cbf333c7aa239221316ccf.js"></script>
+</head>
+<body>
+  <h1 class="title">Type Text</h1>
+  <div class="styled-input">
+  <input id="input" type="text" required="">
+  <label>Input</label>
+  <span></span>
+</div>
+<div class="btn-wrap">
+  <button id="update">Update</button>
+</div>
+<hr>
+<p>You typed: <span id="value"></span></p>
+<script>
+  function nodeScriptReplace(node) {
+    if ( nodeScriptIs(node) === true ) {
+      node.parentNode.replaceChild( nodeScriptClone(node) , node );
+    }
+    else {
+      var i = 0;
+      var children = node.childNodes;
+      while ( i < children.length ) {
+        nodeScriptReplace( children[i++] );
+      }
+    }
+
+    return node;
+  }
+  function nodeScriptIs(node) {
+    return node.tagName === 'SCRIPT';
+  }
+  function nodeScriptClone(node){
+    var script  = document.createElement("script");
+    script.text = node.innerHTML;
+    for( var i = node.attributes.length-1; i >= 0; i-- ) {
+      script.setAttribute( node.attributes[i].name, node.attributes[i].value );
+    }
+    return script;
+  }
+  function inputUpdated() {
+    let value = document.getElementById('value')
+    value.innerHTML = document.getElementById('input').value
+    nodeScriptReplace(value)
+    sendHeight()
+  }
+
+  document.getElementById('update').addEventListener('click', inputUpdated)
+</script>
+</body></html>
